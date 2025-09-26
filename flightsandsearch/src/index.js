@@ -1,8 +1,8 @@
 const express = require('express');
-const { PORT } = require('./config/serverconfig')
+const { PORT, SYNC_DB } = require('./config/serverconfig')
 const logger = require('./config/logger_config');
 const apiroutes = require('./routes/index');
-// const db=require('')
+const db=require('./models')
 const {Airport,City}=require('./models/index');
 const { where } = require('sequelize');
 
@@ -33,10 +33,14 @@ const serverconnect = () => {
   //     id:2
   //   }
   // })
-    const airports=await Airport.findAll({
-      include:'city'
-    });
-    console.log(JSON.stringify(airports, null, 2));
+    // const airports=await Airport.findAll({
+    //   include:'city'
+    // });
+    // console.log(JSON.stringify(airports, null, 2));
+    if(SYNC_DB){
+       db.sequelize.sync({alter:true})
+    }
+      
 
   });
 

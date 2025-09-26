@@ -39,6 +39,27 @@ class Cityrepository {
     });
     return updatedcity;
   }
+
+  //creating airports using city instance
+
+  async createairport({ cityId, airportname,airportaddress }) {
+    try {
+      const city = await City.findByPk(cityId);
+
+      if (!city) {
+        throw new Error(`City with id ${cityId} not found`);
+      }
+      const airport = await city.createAirport(
+        {
+          name: airportname,
+          address:airportaddress
+        }
+      );
+      return airport;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = Cityrepository;
