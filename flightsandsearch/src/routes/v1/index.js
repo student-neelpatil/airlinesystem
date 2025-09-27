@@ -11,6 +11,8 @@ router.delete('/citydelete/:id',Citycontroller.del);
 
 //airports
 router.post('/airport',Airportcontroller.create);
-
+router.delete('/deleteairport/:id',Airportcontroller.del);
+router.get('/getairports/:id',Airportcontroller.find);
+router.patch('/updateairports/:id',Airportcontroller.update);
 
 module.exports=router;

@@ -1,8 +1,11 @@
 const { Cityrepository } = require('../repository/index')
+const {Airportrepo}=require('../repository/index')
 
 class Airportservice {
     constructor() {
         this.cityrepository = new Cityrepository();
+        this.airportrepo=new Airportrepo();
+
     }
 
     async createairports(data) {
@@ -13,7 +16,7 @@ class Airportservice {
                 throw new Error("cityId, airportName, and airportAddress are required");
             }
 
-            const res = await this.cityrepository.createairport({cityId,airportname});
+            const res = await this.airportrepo.createairport({cityId,airportname});
             return res;
         } catch (error) {
             console.log(error);
@@ -22,33 +25,39 @@ class Airportservice {
         }
     }
 
-    // async updatecity(cityid,data){
-    //     try {
-    //         const res=await this.cityrepository.updatecity(cityid,data);
-    //         return res;
-    //     } catch (error) {
-    //        console.log(error)  
-    //     }
-    // }
+   
 
 
-    // async getcity(cityid){
-    //     try {
-    //         const res=await this.cityrepository.getcity(cityid);
-    //         return res;
-    //     } catch (error) {
-    //        console.log(error)  
-    //     }
-    // }
+    async getairports(cityId){
+        try {
+            const res=await this.airportrepo.getairport(cityId);
+            return res;
+        } catch (error) {
+           console.log(error) ;
+           throw error; 
+            
+        }
+    }
 
-    // async deletecity(cityid){
-    //     try {
-    //         const res=await this.cityrepository.deletecity(cityid);
-    //         return res;
-    //     } catch (error) {
-    //        console.log(error)  
-    //     }
-    // }
+    async updateairports(Id,data){
+        try {
+
+            const [airport]=await this.airportrepo.updateairports(Id,data);
+            return airport;
+            
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteairport(cityid){
+        try {
+            const res=await this.airportrepo.deleteairport(cityid);
+            return res;
+        } catch (error) {
+           console.log(error)  
+        }
+    }
 };
 
 module.exports = Airportservice;

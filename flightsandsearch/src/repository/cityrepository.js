@@ -42,7 +42,7 @@ class Cityrepository {
 
   //creating airports using city instance
 
-  async createairport({ cityId, airportname,airportaddress }) {
+  async createairport({ cityId, airportname}) {
     try {
       const city = await City.findByPk(cityId);
 
@@ -51,8 +51,7 @@ class Cityrepository {
       }
       const airport = await city.createAirport(
         {
-          name: airportname,
-          address:airportaddress
+          name: airportname
         }
       );
       return airport;
