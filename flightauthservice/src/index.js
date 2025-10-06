@@ -7,7 +7,11 @@ function serverconnection(){
     const app=express();
 
     app.listen(PORT,()=>{
-        logger.info(`server is connected at port:${PORT}`)
+       try {
+           logger.info(`server is connected at port:${PORT}`);
+       } catch (error) {
+        logger.error(error.message);
+       }
     })
 }
 
