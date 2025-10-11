@@ -28,18 +28,18 @@ const register=async(req,res)=>{
 
 }
 
-const search=async(req,res)=>{
+const deleteuser=async(req,res)=>{
     try {
-        const response=await userservice.searchById(req.params.id);
+        const response=await userservice.deleteuser(req.params.id);
         return res.status(201).json({
-            message:'user is created',
+            message:'user is deleted',
             data: response,
             success: true,
             err: {}
         });
     } catch (error) {
         return res.status(401).json({
-            message:'user is not created',
+            message:'user is not deleted',
             data: {},
             success: false,
             err: {error}
@@ -47,7 +47,30 @@ const search=async(req,res)=>{
     }
 }
 
+const signin=async(req,res)=>{
+    try {
+        const response=await userservice.signin(req.body.email,req.body.password);
+        return res.status(201).json({
+            message:'user is signin successfully',
+            data: response,
+            success: true,
+            err: {}
+        })
+
+    } catch (error) {
+        return res.status(401).json({
+            message:'user is not signin',
+            data: {},
+            success: false,
+            err: {error}
+        });
+    }
+
+}
+
+
+
 
 module.exports={
-    register,search
+    register,deleteuser,signin
 }

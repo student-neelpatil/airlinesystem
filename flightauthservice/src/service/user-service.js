@@ -1,46 +1,93 @@
-const {Userrepository}=require('../repository/index');
+const { Userrepository } = require('../repository/index');
+const jwt = require('jsonwebtoken');
+const {JWT_KEY}=require('../config/serverconfig')
 
-class Userservice{
+class Userservice {
 
-    constructor(){
+    constructor() {
         this.userrepository = new Userrepository();
     }
 
-    async register(data){
+    async register(data) {
         try {
             //empty data is checked in middelware so no need to pass checker for empty password or email
-            const {email,password}=data;
-             const result=await this.userrepository.createuser({email,password});
-             console.log(result);
-             return result;
+            const { email, password } = data;
+            const result = await this.userrepository.createuser({ email, password });
+            console.log(result);
+            return result;
         } catch (error) {
             console.log(error);
             throw error;
         }
     }
 
-      async searchById(data){
-        const {userid}=data;
+    async deleteuser(userid) {
+      
         try {
-            const result=await this.userrepository.getByID({userid});
+            const result = await this.userrepository.del( userid );
             return result;
         } catch (error) {
-             console.log(error);
+            console.log(error);
             throw error;
         }
 
     }
 
-    checkpassword(plainpassword,encryptedpassword){
+    checkpassword(plainpassword, encryptedpassword) {
+        try {
 
-        const isMatched=bcrypt.compare(plainpassword,encryptedpassword);
+            const isMatched = bcrypt.compare(plainpassword, encryptedpassword);
 
-        if(!isMatched){
-            console.log('password not matched');
+            if (!isMatched) {
+                console.log('password not matched');
+            }
+
+            console.log("password matched");
+        } catch (error) {
+           throw error;
         }
-        
-        console.log("password matched");
+    }
+ //generating jwt token
+    genratetoken(user) {
+       try {
+        const result=jwt.sign(user,JWT_KEY,{expiresIn:'1hr'});
+        return result;
+       } catch (error) {
+        console.log("something went wrong");
+        throw error;
+       }
+    }
+
+    verifytoken(token) {
+       try {
+        const result=jwt.verify(token,JWT_KEY);
+        return result;
+       } catch (error) {
+        console.log("something went wrong");
+        throw error;
+       }
+    }
+
+    async signin(email,plainpassword){
+
+        try {
+            //fetch the user using email
+
+            const user=await this.userrepository.getByEmail(email);
+            //compare password
+            const passwordmatch=this.checkpassword(plainpassword,user.password);
+            if(!passwordmatch){
+                console.log("password doesnt match");
+                throw error;
+            }
+
+            const newjwt=this.genratetoken(user);
+            return newjwt;
+        } catch (error) {
+            throw error;
+        }
+
     }
 }
 
-module.exports=Userservice;
+module.exports = Userservice;

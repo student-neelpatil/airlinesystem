@@ -25,6 +25,18 @@ class Userrepository{
         }
     }
 
+    async getByEmail(useremail) {
+        try {
+            const result = await User.findOne({where:{
+                email:useremail
+            }})
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
     async del(userid) {
         try {
             const result = await User.destroy({
