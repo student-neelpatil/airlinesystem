@@ -23,4 +23,6 @@ router.delete(
     usercontroller.deleteuser
 )
 
+router.get('/isauthenticated',usercontroller.isauthenticated)
+
 module.exports=router;
