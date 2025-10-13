@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.INTEGER,
       allowNull:false,
     }, 
-    userId: {
+    userId: { values:['Inprogress','Booked','Cancelled'],
        type:DataTypes.INTEGER,
        allowNull:false,
     },
@@ -28,6 +28,17 @@ module.exports = (sequelize, DataTypes) => {
       values:['Inprogress','Booked','Cancelled'],
       defaultValue:'Inprogress'
     }, 
+    seats_no:{
+        type:DataTypes.INTEGER,
+        allowNull:false,
+        defaultValue:1
+      },
+      totalcost:{
+        type:DataTypes.INTEGER,
+        allowNull:false,
+        defaultValue:0
+      },
+
     sequelize,
     modelName: 'Booking',
   });
