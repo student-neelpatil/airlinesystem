@@ -35,6 +35,8 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
 
+    
+      //it is deleted when migrations are undo or delete
      await queryInterface.removeColumn('Bookings','seats_no');
      await queryInterface.removeColumn('Bookings','totalcost');
   }
