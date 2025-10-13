@@ -33,3 +33,11 @@ class InternalServerError extends Error {
         
     }
 }
+
+
+module.exports={
+    BadRequestError,
+    UnauthorizedError,
+    NotFoundError,
+    InternalServerError
+}
