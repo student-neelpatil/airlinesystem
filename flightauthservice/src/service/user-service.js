@@ -88,6 +88,25 @@ class Userservice {
         }
 
     }
-}
 
+    async isauthenticated(token){
+        try {
+            const response=this.verifytoken(token);
+        if(!response){
+            throw{error:'invalid error'}
+        }
+        const user=this.userrepository.getByID(response.id);
+        if(!user){
+            throw {error:"no user with this corresponding id"
+        }
+        return user.id;
+    }
+        } catch (error) {
+            throw{error}
+        }
+    }
+     
+}
 module.exports = Userservice;
+    
+     

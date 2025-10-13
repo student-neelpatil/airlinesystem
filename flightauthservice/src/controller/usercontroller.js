@@ -95,5 +95,5 @@ const isauthenticated = async (req, res) => {
 
 
 module.exports = {
-    register, deleteuser, signin,isauthenticated
+    register, deleteuser,signin, isauthenticated
 }
